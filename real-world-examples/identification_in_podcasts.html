@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Identification in Podcasts &#8212; From Explicit to Implicit: Audio Embeddings for Music Content Services</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'real-world-examples/identification_in_podcasts';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Technology Comparison" href="../resources/comparison.html" />
+    <link rel="prev" title="Similarity between Songs" href="similarity_between_songs.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">From Explicit to Implicit: Audio Embeddings for Music Content Services</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">AUDIO MODELS</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../audio-models/representations.html">Representing Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../audio-models/music_classification.html">Music Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../audio-models/music_identification.html">Music Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../audio-models/audio_embedding.html">Audio Embedding</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">REAL WORLD EXAMPLES</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="content_based_recommendation.html">Content-based Recommendation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="similarity_between_songs.html">Similarity between Songs</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Identification in Podcasts</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">RESOURCES</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../resources/comparison.html">Technology Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/about_beici.html">About Beici</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/real-world-examples/identification_in_podcasts.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Identification in Podcasts</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="identification-in-podcasts">
+<h1>Identification in Podcasts<a class="headerlink" href="#identification-in-podcasts" title="Permalink to this headline">#</a></h1>
+<p>According to the definition by <a class="reference external" href="https://www.bbc.com/sounds/help/questions/getting-started-with-bbc-sounds/what-are-podcasts">BBC Sound</a>, a <strong>podcast</strong> is an edited piece of content which can be a complete radio programme, an edited extract or highlights from a programme, or completely unique content with a particular theme made to be subscribed and listened to as a series.</p>
+<p>Podcasts are growing exceptionally fast, and the production quality is constantly improving. Many podcasters use music. However, some may throw caution to the wind and just use music without licensing. In this context, music identification services can be helpful to protect the copyright holder by automatically spotting the song used in the podcasts. We proposed a system that utilizes our audio models together. A schematic overview is presented in the figure below.</p>
+<figure class="align-center" id="rwe-iip-flowchart">
+<a class="reference internal image-reference" href="../_images/rwe-iip-flowchart.png"><img alt="../_images/rwe-iip-flowchart.png" src="../_images/rwe-iip-flowchart.png" style="width: 800px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 12 </span><span class="caption-text">Schematic overview of the proposed music identification system for podcasts.</span><a class="headerlink" href="#rwe-iip-flowchart" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The proposed system mainly consists of 3 steps:</p>
+<ul class="simple">
+<li><p>Step 1: given a podcast episode, <a class="reference internal" href="../audio-models/music_classification.html"><span class="doc std std-doc">content type classification</span></a> can highlight which parts contain music. Non-music parts can be removed in order to increase the efficiency of music identification in the following steps.</p></li>
+<li><p>Step 2: using the music clips obtained from Step 1, <a class="reference internal" href="../audio-models/music_identification.html"><span class="doc std std-doc">audio fingerprinting</span></a> can look up our fingerprint database and identify the particular music recording that is the source of the clip.</p></li>
+<li><p>Step 3: the remaining unidentified clips will be examined using <a class="reference internal" href="../audio-models/music_identification.html"><span class="doc std std-doc">version identification</span></a>.</p></li>
+</ul>
+<p>Let’s take an episode from <a class="reference external" href="https://www.npr.org/podcasts/510306/tiny-desk-concerts-audio">NPR’s Tiny Desk Concerts</a> as an example! We choose <a class="reference external" href="https://www.npr.org/2016/08/12/489769830/anderson-paak-the-free-nationals-tiny-desk-concert">this one featuring Anderson .Paak and the Free Nationals</a>, who performed 4 songs including <em>Come Down</em>, <em>Heart Don’t Stand A Chance</em>, <em>Put Me Thru</em> and <em>Suede</em>. The corresponding video can be seen on <a class="reference external" href="https://www.youtube.com/watch?v=ferZnZ0_rSM">YouTube</a>, where presents an incorrect “music in this video” claimed by one of YouTube’s copyright management tools, like Content ID.</p>
+<p>Step 1 returns non-music vs. music results as shown in <a class="reference internal" href="#rwe-iip-step1"><span class="std std-numref">Fig. 13</span></a>. The non-music parts correspond to small chats between songs. By removing these non-music parts, we can obtain 4 music clips from time positions 0-177, 225-408, 456-642, and 720-906 seconds, respectively.</p>
+<figure class="align-center" id="rwe-iip-step1">
+<a class="reference internal image-reference" href="../_images/rwe-iip-step1.png"><img alt="../_images/rwe-iip-step1.png" src="../_images/rwe-iip-step1.png" style="width: 800px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 13 </span><span class="caption-text">Non-music vs. music results obtained from Step 1.</span><a class="headerlink" href="#rwe-iip-step1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>By running audio fingerprinting on the 4 music clips stored as waveform files, we can get results from Step 2 as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="n">Query</span><span class="p">:</span> <span class="n">paak_npr_0</span><span class="o">-</span><span class="mf">177.</span><span class="n">wav</span>
+  <span class="o">-</span> <span class="n">no</span> <span class="n">match</span>
+<span class="o">==&gt;</span> <span class="n">Query</span><span class="p">:</span> <span class="n">paak_npr_225</span><span class="o">-</span><span class="mf">408.</span><span class="n">wav</span>
+  <span class="o">-</span> <span class="n">no</span> <span class="n">match</span>
+<span class="o">==&gt;</span> <span class="n">Query</span><span class="p">:</span> <span class="n">paak_npr_456</span><span class="o">-</span><span class="mf">642.</span><span class="n">wav</span>
+  <span class="o">-</span> <span class="n">no</span> <span class="n">match</span>
+<span class="o">==&gt;</span> <span class="n">Query</span><span class="p">:</span> <span class="n">paak_npr_720</span><span class="o">-</span><span class="mf">906.</span><span class="n">wav</span>
+  <span class="o">-</span> <span class="n">no</span> <span class="n">match</span>
+</pre></div>
+</div>
+<p>Our database contains fingerprints of the official-released version of the 4 songs. The “no match” results show that audio fingerprinting is highly sensitive to identify a particular version of a piece of music. These 4 songs played at the NPR Tiny Desk Concert are live versions of the official ones. Therefore version identification is required to identify the 4 music clips.</p>
+<p>The following results from Step 3 present the distance between embeddings of each music clip and 4 official-released songs stored as mp3 files.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">==&gt;</span> <span class="n">Distance</span> <span class="n">of</span> <span class="n">paak_npr_0</span><span class="o">-</span><span class="mf">177.</span><span class="n">wav</span> <span class="n">vs</span><span class="o">.</span> <span class="mi">4</span> <span class="n">official</span> <span class="n">mp3s</span>
+  <span class="o">*</span> <span class="mf">0.3995</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_come_down</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">-</span> <span class="mf">0.8798</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_heart_dont_stand_a_chance</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">-</span> <span class="mf">0.6774</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_put_me_thru</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">-</span> <span class="mf">0.7150</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_suede</span><span class="o">.</span><span class="n">mp3</span>
+<span class="o">==&gt;</span> <span class="n">Distance</span> <span class="n">of</span> <span class="n">paak_npr_225</span><span class="o">-</span><span class="mf">408.</span><span class="n">wav</span> <span class="n">vs</span><span class="o">.</span> <span class="mi">4</span> <span class="n">official</span> <span class="n">mp3s</span>
+  <span class="o">-</span> <span class="mf">0.8573</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_come_down</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">*</span> <span class="mf">0.4444</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_heart_dont_stand_a_chance</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">-</span> <span class="mf">0.8746</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_put_me_thru</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">-</span> <span class="mf">0.7780</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_suede</span><span class="o">.</span><span class="n">mp3</span>
+<span class="o">==&gt;</span> <span class="n">Distance</span> <span class="n">of</span> <span class="n">paak_npr_456</span><span class="o">-</span><span class="mf">642.</span><span class="n">wav</span> <span class="n">vs</span><span class="o">.</span> <span class="mi">4</span> <span class="n">official</span> <span class="n">mp3s</span>
+  <span class="o">-</span> <span class="mf">0.6188</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_come_down</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">-</span> <span class="mf">0.8092</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_heart_dont_stand_a_chance</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">*</span> <span class="mf">0.2486</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_put_me_thru</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">-</span> <span class="mf">0.5723</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_suede</span><span class="o">.</span><span class="n">mp3</span>
+<span class="o">==&gt;</span> <span class="n">Distance</span> <span class="n">of</span> <span class="n">paak_npr_720</span><span class="o">-</span><span class="mf">906.</span><span class="n">wav</span> <span class="n">vs</span><span class="o">.</span> <span class="mi">4</span> <span class="n">official</span> <span class="n">mp3s</span>
+  <span class="o">-</span> <span class="mf">0.5981</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_come_down</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">-</span> <span class="mf">0.7284</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_heart_dont_stand_a_chance</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">-</span> <span class="mf">0.6291</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_put_me_thru</span><span class="o">.</span><span class="n">mp3</span>
+  <span class="o">*</span> <span class="mf">0.4045</span> <span class="n">vs</span><span class="o">.</span> <span class="n">paak_suede</span><span class="o">.</span><span class="n">mp3</span>
+</pre></div>
+</div>
+<p>Star symbol (<code class="docutils literal notranslate"><span class="pre">*</span></code>) indicates the distance is less than 0.45, which implies a high similarity. Since no other songs in our database obtain such degree of similarity, we conclude that the 4 music clips are identified as:</p>
+<ul class="simple">
+<li><p>00:00-02:57 clip (paak_npr_0-177.wav) is <a class="reference external" href="https://www.youtube.com/watch?v=-OqrcUvrbRY"><em>Come Down</em></a> (<code class="docutils literal notranslate"><span class="pre">paak_come_down.mp3</span></code>).</p></li>
+<li><p>03:45-06:48 clip (paak_npr_225-408.wav) is <a class="reference external" href="https://www.youtube.com/watch?v=O5mcLhuUfG0"><em>Heart Don’t Stand A Chance</em></a> (<code class="docutils literal notranslate"><span class="pre">paak_heart_dont_stand_a_chance.mp3</span></code>).</p></li>
+<li><p>07:36-10:42 clip (paak_npr_456-642.wav) is <a class="reference external" href="https://www.youtube.com/watch?v=pK2-XuLByuQ"><em>Put Me Thru</em></a> (<code class="docutils literal notranslate"><span class="pre">paak_put_me_thru.mp3</span></code>).</p></li>
+<li><p>12:00-15:06 clip (paak_npr_720-906.wav) is <a class="reference external" href="https://www.youtube.com/watch?v=zNTNbNtft9g"><em>Suede</em></a> (<code class="docutils literal notranslate"><span class="pre">paak_suede.mp3</span></code>).</p></li>
+</ul>
+<p><a class="reference internal" href="#rwe-iip-step3"><span class="std std-numref">Fig. 14</span></a> annotates the distance results from version identification by superimposing to <a class="reference internal" href="#rwe-iip-step1"><span class="std std-numref">Fig. 13</span></a>.</p>
+<figure class="align-center" id="rwe-iip-step3">
+<a class="reference internal image-reference" href="../_images/rwe-iip-step3.png"><img alt="../_images/rwe-iip-step3.png" src="../_images/rwe-iip-step3.png" style="width: 800px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 14 </span><span class="caption-text">Distance results from version identification.</span><a class="headerlink" href="#rwe-iip-step3" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./real-world-examples"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="similarity_between_songs.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Similarity between Songs</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../resources/comparison.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Technology Comparison</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Beici Liang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
