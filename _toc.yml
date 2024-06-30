@@ -1,0 +1,24 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro
+parts:
+- caption: AUDIO MODELS
+  chapters:
+    - file: audio-models/representations
+    - file: audio-models/music_classification
+    - file: audio-models/music_identification
+    - file: audio-models/audio_embedding
+
+- caption: REAL WORLD EXAMPLES
+  chapters:
+    - file: real-world-examples/content_based_recommendation
+    - file: real-world-examples/similarity_between_songs
+    - file: real-world-examples/identification_in_podcasts
+
+- caption: RESOURCES
+  chapters:
+    - file: resources/comparison
+    - file: refs
+    - file: resources/about_beici

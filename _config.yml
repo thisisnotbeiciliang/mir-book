@@ -1,0 +1,46 @@
+#######################################################################################
+# A default configuration that will be loaded for all jupyter books
+# Users are expected to override these values in their own `_config.yml` file.
+# This is also the "master list" of all allowed keys and values.
+
+#######################################################################################
+# Book settings
+title                       : "From Explicit to Implicit: Audio Embeddings for Music Content Services"  # The title of the book. Will be placed in the left navbar.
+author                      : "Dr. Beici Liang"  # The author of the book
+copyright                   : "2024"  # Copyright year to be placed in the footer
+# logo                        : "./figures/logo/logo-color-positive.png"  # A path to the book logo
+# Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
+exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints", "**.git", README.md]
+# Auto-exclude files not in the toc
+only_build_toc_files        : true
+# Include bibtex file
+bibtex_bibfiles:
+  - references.bib
+#######################################################################################
+# Execution settings
+execute:
+  execute_notebooks         : auto  # Whether to execute notebooks at build time. Must be one of ("auto", "force", "cache", "off")
+  cache                     : ""  # A path to the jupyter cache that will be used to store execution artifacs. Defaults to `_build/.jupyter_cache/`
+  timeout                   : 300  # The maximum time (in seconds) each notebook cell is allowed to run.
+
+#######################################################################################
+# HTML-specific settings
+html:
+  favicon                   : "./figures/logo/favicon.ico"  # A path to a favicon image
+  use_repository_button     : false  # Whether to add an "Repository" button to pages. If `true`, repository information in repository: must be filled in
+
+#######################################################################################
+# Launch button settings
+launch_buttons:
+  notebook_interface        : "classic"  # The interface interactive links will activate ["classic", "jupyterlab"]
+  binderhub_url             : "https://mybinder.org"  # The URL of the BinderHub (for example, https://mybinder.org)
+
+repository:
+  url                       :  https://github.com/executablebooks/jupyter-book # The URL to your book's repository
+
+#######################################################################################
+# Advanced and power-user settings
+sphinx:
+  extra_extensions          :  # A list of extra extensions to load by Sphinx.
+  config                    :  # key-value pairs to directly over-ride the Sphinx configuration
+    language                : en

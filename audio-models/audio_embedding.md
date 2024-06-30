@@ -1,0 +1,9 @@
+# Audio Embedding
+
+In the context of machine learning, an embedding is a low-dimensional, learned continuous vector representation of discrete variables into which you can translate high-dimensional vectors. Audio embedding can be obtained either directly from a trained neural network or by concatenating the results from different models.
+
+For example, in this paper [_Novel Audio Embeddings for Personalized Recommendations on Newly Released Tracks_](https://drive.google.com/file/d/1ONbaBmxQ26Z_1UNS1yvNPlHlDwx7CLn1/view) I published at Machine Learning for Media Discovery Workshop at the International Conference on Machine Learning (ICML 2020), frame-level results from two music classification models are summarized across all frames by their descriptive statistics to obtain an audio embedding of the full music recording.
+
+On the other hand, in this paper [_Learning Audio Embeddings with User Listening Data for Content-based Music Recommendation_](https://arxiv.org/pdf/2010.15389.pdf) I published at the IEEE International Conference on Audio, Speech and Signal Processing (ICASSP 2021), an audio embedding can be directly obtained from Siamese networks trained by metric learning.
+
+The above audio embeddings can be used in content-based recommendation systems (click [here](../real-world-examples/content_based_recommendation) to see real-world examples) to fix the cold-start problem occurred in collaborative filtering. Audio embeddings derived from other models can be also helpful to explore similar songs as seen in the [Adobe](https://stock.adobe.com/audio) and [Jamahook](https://vst.jamahook.com/sounds) applications, or identify the underlying music from derivative versions (check how embeddings are used in version identification in [](../real-world-examples/similarity_between_songs)).

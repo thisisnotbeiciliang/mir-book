@@ -1,0 +1,704 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Similarity between Songs &#8212; From Explicit to Implicit: Audio Embeddings for Music Content Services</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=12da95d707ffb74b382d" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'real-world-examples/similarity_between_songs';</script>
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Identification in Podcasts" href="identification_in_podcasts.html" />
+    <link rel="prev" title="Content-based Recommendation" href="content_based_recommendation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">From Explicit to Implicit: Audio Embeddings for Music Content Services</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">AUDIO MODELS</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../audio-models/representations.html">Representing Audio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../audio-models/music_classification.html">Music Classification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../audio-models/music_identification.html">Music Identification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../audio-models/audio_embedding.html">Audio Embedding</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">REAL WORLD EXAMPLES</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="content_based_recommendation.html">Content-based Recommendation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Similarity between Songs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="identification_in_podcasts.html">Identification in Podcasts</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">RESOURCES</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../resources/comparison.html">Technology Comparison</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../refs.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../resources/about_beici.html">About Beici</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/real-world-examples/similarity_between_songs.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/real-world-examples/similarity_between_songs.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Similarity between Songs</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-audio-fingerprinting">Using Audio Fingerprinting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-version-identification">Using Version Identification</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="similarity-between-songs">
+<h1>Similarity between Songs<a class="headerlink" href="#similarity-between-songs" title="Permalink to this headline">#</a></h1>
+<p>In this example, we use the official and other versions of <em>I’ll Be There</em> to illustrate similarity measurements between songs.</p>
+<section id="using-audio-fingerprinting">
+<h2>Using Audio Fingerprinting<a class="headerlink" href="#using-audio-fingerprinting" title="Permalink to this headline">#</a></h2>
+<p>Assume that our database contains the official released <em>I’ll Be There</em> by Jess Glynne (<a class="reference external" href="https://www.youtube.com/watch?v=iQp1_GfDhwQ">YouTube video</a>). Given a 10-second fragment as a query (clipped from 0:40 to 0:50 in the video and saved as <code class="docutils literal notranslate"><span class="pre">fragment-10s-from-official.wav</span></code>), our audio fingerprinting model can successfully recognise it along with the timestamp information. Following code block demonstrates the calculation using 1 CPU with 7.5 GB memory.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">query_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;fragment-10s-from-official.wav&quot;</span><span class="p">]</span>
+<span class="n">query_filepaths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;../../example-audio/i-will-be-there/fragment-10s-from-official.wav&quot;</span><span class="p">]</span>
+<span class="n">database_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;official-by-jess-glynne.m4a&quot;</span><span class="p">]</span>
+<span class="n">database_filepaths</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;../../example-audio/i-will-be-there/official-by-jess-glynne.m4a&quot;</span><span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">time</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../../dv-audio-models/audio-fingerprint&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">fingerprint</span> <span class="k">as</span> <span class="nn">fp</span>
+
+<span class="k">def</span> <span class="nf">get_minsec</span><span class="p">(</span><span class="n">seconds</span><span class="p">):</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">seconds</span><span class="p">),</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">divmod</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">minsec</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{:02d}</span><span class="s2">:</span><span class="si">{:02d}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">minsec</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Get inverted fingerprint hashes from database of </span><span class="si">{}</span><span class="s2"> songs&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">database_filepaths</span><span class="p">)))</span>
+<span class="n">db_songs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">database_filenames</span><span class="p">,</span> <span class="n">database_filepaths</span><span class="p">):</span>
+    <span class="n">audio_input</span> <span class="o">=</span> <span class="p">[</span><span class="n">filename</span><span class="p">,</span> <span class="n">filepath</span><span class="p">]</span>
+    <span class="n">hashes</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">fingerprint</span><span class="p">(</span><span class="n">audio_input</span><span class="p">)</span>
+    <span class="n">invert</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">get_invert_from_hashes</span><span class="p">(</span><span class="n">hashes</span><span class="p">)</span>
+    <span class="n">db_songs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">invert</span><span class="p">)</span>
+
+<span class="n">database_hash_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    using </span><span class="si">{}</span><span class="s2"> seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">database_hash_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Get fingerprint hashes from queries of </span><span class="si">{}</span><span class="s2"> fragments&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">query_filepaths</span><span class="p">)))</span>
+<span class="n">query_songs_hashes</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">query_filenames</span><span class="p">,</span> <span class="n">query_filepaths</span><span class="p">):</span>
+    <span class="n">audio_input</span> <span class="o">=</span> <span class="p">[</span><span class="n">filename</span><span class="p">,</span> <span class="n">filepath</span><span class="p">]</span>
+    <span class="n">hashes</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">fingerprint</span><span class="p">(</span><span class="n">audio_input</span><span class="p">)</span>
+    <span class="n">query_songs_hashes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hashes</span><span class="p">)</span>
+
+<span class="n">query_hash_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    using </span><span class="si">{}</span><span class="s2"> seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">query_hash_time</span> <span class="o">-</span> <span class="n">database_hash_time</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+    
+<span class="n">query_matches</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">query_hashes</span> <span class="ow">in</span> <span class="n">query_songs_hashes</span><span class="p">:</span>
+    <span class="n">query_matches</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fp</span><span class="o">.</span><span class="n">find_matches</span><span class="p">(</span><span class="n">query_hashes</span><span class="p">,</span> <span class="n">db_songs</span><span class="p">))</span>
+    
+<span class="k">for</span> <span class="n">audio</span><span class="p">,</span> <span class="n">match</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">query_filepaths</span><span class="p">,</span> <span class="n">query_matches</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Query: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">audio</span><span class="p">))</span>
+    <span class="n">most_match</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">find_most_match_seconds</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="mi">256</span><span class="o">/</span><span class="mi">22050</span><span class="p">)</span>
+    <span class="n">top1_match</span> <span class="o">=</span> <span class="n">most_match</span><span class="p">[</span><span class="s2">&quot;top1_match&quot;</span><span class="p">]</span>
+    <span class="n">top1_score</span> <span class="o">=</span> <span class="n">most_match</span><span class="p">[</span><span class="s2">&quot;top1_score&quot;</span><span class="p">]</span>
+    <span class="n">top1_starttime</span> <span class="o">=</span> <span class="n">most_match</span><span class="p">[</span><span class="s2">&quot;top1_starttime&quot;</span><span class="p">]</span>
+    <span class="n">query_matchstart</span> <span class="o">=</span> <span class="n">most_match</span><span class="p">[</span><span class="s2">&quot;query_matchstart&quot;</span><span class="p">]</span>
+    <span class="n">query_matchend</span> <span class="o">=</span> <span class="n">most_match</span><span class="p">[</span><span class="s2">&quot;query_matchend&quot;</span><span class="p">]</span>
+    <span class="n">query_matchdur</span> <span class="o">=</span> <span class="n">query_matchend</span> <span class="o">-</span> <span class="n">query_matchstart</span> 
+    <span class="k">if</span> <span class="n">query_matchdur</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">top1_score</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">query_matchdur</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - no match&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> 
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - top1 match: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">top1_match</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - top1&#39;s </span><span class="si">{}</span><span class="s2"> match query&#39;s </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">get_minsec</span><span class="p">(</span><span class="n">top1_starttime</span><span class="p">),</span> <span class="n">get_minsec</span><span class="p">(</span><span class="n">query_matchstart</span><span class="p">)))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - match till query&#39;s </span><span class="si">{}</span><span class="s2">s (about </span><span class="si">{}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query_matchend</span><span class="p">,</span> <span class="n">get_minsec</span><span class="p">(</span><span class="n">query_matchend</span><span class="p">)))</span>
+
+<span class="n">index_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Index using </span><span class="si">{}</span><span class="s2"> seconds&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">index_time</span> <span class="o">-</span> <span class="n">query_hash_time</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==&gt; Get inverted fingerprint hashes from database of 1 songs
+    using 59.432 seconds
+==&gt; Get fingerprint hashes from queries of 1 fragments
+    using 0.657 seconds
+==&gt; Query: ../../example-audio/i-will-be-there/fragment-10s-from-official.wav
+  - top1 match: official-by-jess-glynne
+  - top1&#39;s 00:39 match query&#39;s 00:00
+  - match till query&#39;s 9.195s (about 00:09)
+==&gt; Index using 0.008 seconds
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="using-version-identification">
+<h2>Using Version Identification<a class="headerlink" href="#using-version-identification" title="Permalink to this headline">#</a></h2>
+<p>Since audio fingerprinting is highly sensitive to identify a particular version of a piece of music, if any of the following versions are used as queries, no match will be returned, unless our database already contains fingerprints of these versions.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">violin-by-barbara-koba.m4a</span></code> (<a class="reference external" href="https://www.youtube.com/watch?v=HZsNvx1bAzU">Youtube video</a>): original vocal parts are performed by violin;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cover-by-kimberly-fransens.m4a</span></code> (<a class="reference external" href="https://www.youtube.com/watch?v=VEQsJR7jK0c">Youtube video</a>): a cover song performed by another singer with guitar accompaniment.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">guitar-by-shoestringkaraoke.m4a</span></code> (<a class="reference external" href="https://www.youtube.com/watch?v=e0c5V0gRxuI">Youtube video</a>): an instrumental version played by guitar.</p></li>
+</ul>
+<p>In this case, we can obtain the audio embeddings of the above 3 songs and then compare with our database, which contains the embedding of the official release (<code class="docutils literal notranslate"><span class="pre">official-by-jess-glynne.m4a</span></code>) and other 2023 songs randomly obtained from YouTube. If pairwise similarity measurement returns a distance score smaller than 0.45, the input query can be considered as a version candidate. Following code block demonstrates the calculation using 1 CPU with 7.5 GB memory.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;../../dv-audio-models/audio-embedding&quot;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">models</span>
+<span class="kn">from</span> <span class="nn">embedding</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
+
+<span class="c1"># query info</span>
+<span class="n">query_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;violin-by-barbara-koba.m4a&quot;</span><span class="p">,</span> 
+                   <span class="s2">&quot;cover-by-kimberly-fransens.m4a&quot;</span><span class="p">,</span> 
+                   <span class="s2">&quot;guitar-by-shoestringkaraoke.m4a&quot;</span><span class="p">]</span>
+<span class="n">query_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;../../example-audio/i-will-be-there/violin-by-barbara-koba.m4a&quot;</span><span class="p">,</span> 
+              <span class="s2">&quot;../../example-audio/i-will-be-there/cover-by-kimberly-fransens.m4a&quot;</span><span class="p">,</span> 
+              <span class="s2">&quot;../../example-audio/i-will-be-there/guitar-by-shoestringkaraoke.m4a&quot;</span><span class="p">]</span>
+<span class="c1"># database info</span>
+<span class="n">official_filenames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;official-by-jess-glynne.m4a&quot;</span><span class="p">]</span>
+<span class="n">official_list</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;../../example-audio/i-will-be-there/official-by-jess-glynne.m4a&quot;</span><span class="p">]</span>
+<span class="n">embeddings_2023</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;../../dv-audio-models/audio-embedding/demo_data/embeddings_2023.npy&quot;</span><span class="p">)</span>
+<span class="n">audiofile_2023</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;../../dv-audio-models/audio-embedding/demo_data/audiofile_2023.npy&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Step 1: audio pre-processing&quot;</span><span class="p">)</span>
+<span class="n">audio_representation_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">audio_path</span> <span class="ow">in</span> <span class="n">tqdm</span><span class="p">(</span><span class="n">query_list</span> <span class="o">+</span> <span class="n">official_list</span><span class="p">):</span>
+    <span class="n">audio_representation</span> <span class="o">=</span> <span class="n">get_audio_representation</span><span class="p">(</span><span class="n">audio_path</span><span class="p">)</span>
+    <span class="n">audio_representation_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">audio_representation</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="n">step1_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Step 2: obtain embeddings&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">audio_representation_list</span><span class="p">,</span> <span class="n">out_length</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<span class="n">dataloader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_workers</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">load_model</span><span class="p">(</span><span class="n">models</span><span class="p">)</span>
+<span class="n">embeddings</span> <span class="o">=</span> <span class="n">get_norm_embedding</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">dataloader</span><span class="p">)</span>
+
+<span class="n">embedding_official</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">embeddings_query</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">[:</span><span class="nb">len</span><span class="p">(</span><span class="n">query_list</span><span class="p">)]</span>
+<span class="n">embeddings_database</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">embedding_official</span><span class="p">,</span> <span class="n">embeddings_2023</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="n">step2_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Step 3: embedding distance beetween </span><span class="si">{}</span><span class="s2"> queries and official-by-jess-glynne.m4a&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">query_list</span><span class="p">)))</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">embedding_query</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">embeddings_query</span><span class="p">):</span>
+    <span class="n">dis</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">embedding_query</span><span class="p">,</span> <span class="n">embedding_official</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - </span><span class="si">{}</span><span class="s2"> vs. official: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query_filenames</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">dis</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">()</span>    
+<span class="n">step3_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Step 4: similarity ranking&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Measure the distance between </span><span class="si">{}</span><span class="s2"> queries and database of&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">query_list</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  total </span><span class="si">{}</span><span class="s2"> songs in a pairwise fashion. If distance&lt;0.45,&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">embeddings_database</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  present rank | distance | filename of the database song.&quot;</span><span class="p">)</span>
+
+<span class="n">audiofiles_database</span> <span class="o">=</span> <span class="n">official_filenames</span> <span class="o">+</span> <span class="n">audiofile_2023</span>
+<span class="n">labels_database</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">official_filenames</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">audiofile_2023</span><span class="p">)</span>
+<span class="n">audio2label</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">audio</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">audiofiles_database</span><span class="p">,</span> <span class="n">labels_database</span><span class="p">):</span>
+    <span class="n">audio2label</span><span class="p">[</span><span class="n">audio</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
+
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">embedding_query</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">embeddings_query</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;--&gt; Query: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query_filenames</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+    <span class="n">dis_list</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">embedding_query</span><span class="p">,</span> <span class="n">embeddings_database</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="n">row</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">dis</span><span class="p">,</span> <span class="n">audio</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dis_list</span><span class="p">,</span> <span class="n">audiofiles_database</span><span class="p">):</span>
+        <span class="n">row</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">dis</span><span class="p">,</span> <span class="n">audio</span><span class="p">])</span>
+    <span class="n">row</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">n_database</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">dis</span><span class="p">,</span> <span class="n">audio</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="n">audio2label</span><span class="p">[</span><span class="n">audio</span><span class="p">]</span>
+        <span class="n">rank</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">label</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2"> | </span><span class="si">{:.4f}</span><span class="s2"> | </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">n_database</span><span class="p">,</span> <span class="n">dis</span><span class="p">,</span> <span class="n">audio</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dis</span> <span class="o">&lt;</span> <span class="mf">0.45</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  * </span><span class="si">{}</span><span class="s2">/</span><span class="si">{}</span><span class="s2"> | </span><span class="si">{:.4f}</span><span class="s2"> | </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">n_database</span><span class="p">,</span> <span class="n">dis</span><span class="p">,</span> <span class="n">audio</span><span class="p">))</span>  
+
+<span class="nb">print</span><span class="p">()</span>
+<span class="n">step4_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;==&gt; Calculation time (seconds) using 1 CPU with 7.5 GB memory&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - Step 1 audio pre-processing: </span><span class="si">{:.3f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step1_time</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - Step 2 obtain embeddings: </span><span class="si">{:.3f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step2_time</span> <span class="o">-</span> <span class="n">step1_time</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - Step 3 embedding distance: </span><span class="si">{:.3f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step3_time</span> <span class="o">-</span> <span class="n">step2_time</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - Step 4 similarity ranking: </span><span class="si">{:.3f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">step4_time</span> <span class="o">-</span> <span class="n">step3_time</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  - Total: </span><span class="si">{:.3f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==&gt; Step 1: audio pre-processing
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "89a5221efd9340fd8959857782872d6b", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==&gt; Step 2: obtain embeddings
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"model_id": "51698b7b851948f5a19555469cff6eaf", "version_major": 2, "version_minor": 0}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>==&gt; Step 3: embedding distance beetween 3 queries and official-by-jess-glynne.m4a
+  - violin-by-barbara-koba.m4a vs. official: 0.1826
+  - cover-by-kimberly-fransens.m4a vs. official: 0.1858
+  - guitar-by-shoestringkaraoke.m4a vs. official: 0.4458
+
+==&gt; Step 4: similarity ranking
+  Measure the distance between 3 queries and database of
+  total 2024 songs in a pairwise fashion. If distance&lt;0.45,
+  present rank | distance | filename of the database song.
+--&gt; Query: violin-by-barbara-koba.m4a
+  - 1/2024 | 0.1826 | official-by-jess-glynne.m4a
+--&gt; Query: cover-by-kimberly-fransens.m4a
+  - 1/2024 | 0.1858 | official-by-jess-glynne.m4a
+--&gt; Query: guitar-by-shoestringkaraoke.m4a
+  * 1/2024 | 0.4182 | 0333_allday.mp3
+  - 2/2024 | 0.4458 | official-by-jess-glynne.m4a
+
+==&gt; Calculation time (seconds) using 1 CPU with 7.5 GB memory
+  - Step 1 audio pre-processing: 44.007 
+  - Step 2 obtain embeddings: 40.868 
+  - Step 3 embedding distance: 0.001 
+  - Step 4 similarity ranking: 0.049 
+  - Total: 84.925
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can observe from the results in Step 4 that using the current thresholding value may retrieve songs not related to the query. In real-world applications, the notion of similarity used to compare different audio recordings largely depends on the respective application as well as the user requirements. Therefore this thresholding value can be adjusted according to the application scenarios.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./real-world-examples"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="content_based_recommendation.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Content-based Recommendation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="identification_in_podcasts.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Identification in Podcasts</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-audio-fingerprinting">Using Audio Fingerprinting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#using-version-identification">Using Version Identification</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            <div class="bd-footer-content__inner">
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Dr. Beici Liang
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2024.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div></div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=12da95d707ffb74b382d"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=12da95d707ffb74b382d"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
