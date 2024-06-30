@@ -1,6 +1,6 @@
-# demo-book
+# mir-book
 
-This is the README file for _demo-book_ hosted online at Google Cloud Platform (GCP). 
+This is the README file for _mir-book_ hosted online at https://thisisnotbeiciliang.github.io/mir-book. 
 
 All the text for each chapter of the book lives inside the folders `./audio-models`, `./real-world-examples`, and `./resources` directories. All figures associated to the chapters are stored in and linked from the `./figures` directory. Landing page corresponds to the `intro.md` file. A collection of bibliography from all the chapters exist in the `references.bib` file.
 
@@ -12,15 +12,14 @@ Documentation on controlling the TOC structure can be found on the [Jupyter Book
 - Same applies for more general configuration using `_config.yml`.
 Documentation on configuring book settings can be found on the [Jupyter Book website](https://jupyterbook.org/customize/config.html).
 
-## Deploying
+## Deploy
 
 The site is built using the `jupyter-book` command.
 
-### Locally (Mac / Linux Only)
+### Local build
 
 To build the book and preview your changes locally you can run the following command:
 ```
-cd demo-book
 jupyter-book build .
 ```
 Now you can open the path provided by jupyter-book as output in your terminal.
@@ -30,7 +29,6 @@ Now you can open the path provided by jupyter-book as output in your terminal.
 When you test your edits by building the book multiple times, it is better to clean up the last build before generating a new one.
 You can either manually delete the `./_build` folder every time, or run this command:
 ```
-cd demo-book
 jupyter-book clean .
 ```
 More details on this process can be read on the [Jupyter Book's GitHub repository](https://github.com/executablebooks/jupyter-book/blob/master/docs/advanced/advanced.md#clean-your-books-generated-files).
@@ -41,24 +39,12 @@ When editing or reviewing this book locally, you can run the Sphinx link checker
 To run the link checker, use the following command:
 
 ```
-cd demo-book
 jupyter-book build . --builder linkcheck
 ```
 
 The link checker checks if the each link resolves and prints the status on your terminal so that you can check and resolve any incorrect links.
 Read more about this on the [Jupyter Book's GitHub repository](https://github.com/executablebooks/jupyter-book/blob/master/docs/advanced/advanced.md#check-external-links-in-your-book).
 
-### On GCP
+### Host online
 
-_demo-book_ is built and deployed online at Googel Cloud Platform.
-
-To do this, you'll need the following settings:
-
-- Base directory: `cd /home/liangbeici/demo-book`
-- Activate environment: `source /usr/local/miniconda3/bin/activate && conda activate dl4mir`
-- Build command: `jupyter-book build .`
-- Publish directory: `/home/liangbeici/demo-book/_build/html/`
-
-I've setup `nginx` to serve the above static content so that anyone can view it via this compute engine's public IP address. Check the nginx configuration at `/etc/nginx/nginx.conf`.
-
-Now you can view this demo book by accessing `http://$PUBLIC_IP_ADDRESS_OF_GCP_INSTANCE/html/` (e.g., http://34.105.207.50/html/).
+Follow [publish your book online](https://jupyterbook.org/en/stable/start/publish.html) with Github Page.
